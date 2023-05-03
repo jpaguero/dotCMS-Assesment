@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { NewsService } from '../services/news.service';
 
@@ -8,17 +9,23 @@ import { NewsService } from '../services/news.service';
   templateUrl: './new.component.html',
   styleUrls: ['./new.component.scss']
 })
-export class NewComponent implements OnInit {
+export class NewComponent implements OnInit, OnDestroy {
   news: any;
+  subscription?: Subscription;
 
   constructor(
     private route: ActivatedRoute,
     private newsService: NewsService
   ) { }
 
-  ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.news = this.newsService.getNewsById(id);
+  ngOnInit(): void {
+    this.subscription = this.route.params.subscribe(params => {
+      const id = +params['id'];
+      this.news = this.newsService.getNewsById(id.toString());
+    });
   }
 
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
 }

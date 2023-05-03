@@ -37,4 +37,15 @@ export class NewsService {
   getNewsById(id: string | null) {
     return this.news.find(item => item.id === id);
   }
+
+  getNewsList() {
+    return this.news.map(item => {
+      return {
+        id: item.id,
+        title: item.title,
+        image: item.image,
+        date: item.date
+      }
+    });
+  }
 }
