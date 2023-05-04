@@ -1,4 +1,4 @@
-<div class="new">
+<div class="new" *ngIf="newItem">
   <h1>{{ newItem.title }}</h1>
   <img src="{{ newItem.image }}" alt="{{ newItem.title }}" />
   <p>{{ newItem.publishDate | date }}</p>

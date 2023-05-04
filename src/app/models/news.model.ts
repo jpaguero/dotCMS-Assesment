@@ -18,7 +18,7 @@ interface blogContent {
 }
 
 export interface New {
-  id: '',
+  inode: string,
   title: string;
   image: string;
   publishDate: string;
@@ -26,7 +26,7 @@ export interface New {
 }
 
 export const newDefault: New = {
-  id: '',
+  inode: '',
   title: '',
   image: '',
   publishDate: ''

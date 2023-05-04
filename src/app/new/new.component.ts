@@ -33,6 +33,7 @@ export class NewComponent implements OnInit, OnDestroy {
       ).subscribe(params => {
         const id = params['id'];
         this.newItem = this.getNewsById(id);
+        console.log(this.newItem );
       })
     );
   }
@@ -42,6 +43,6 @@ export class NewComponent implements OnInit, OnDestroy {
   }
 
   getNewsById(id: string | null) {
-    return this.newsList.find((item: any) => item.inode === id);
+    return this.newsList?.find((item: any) => item.inode === id);
   }
 }

@@ -2,11 +2,11 @@
   <h2>News List</h2>
   <ul>
     <li *ngFor="let news of newsList">
-      <a [routerLink]="['new', news.id]">
-        <img [src]="news.imageUrl" alt="{{ news.title }} image" />
+      <a [routerLink]="['new', news.inode]">
+        <img [src]="news.image" alt="{{ news.title }} image" />
         <div>
           <h3>{{ news.title }}</h3>
-          <p>{{ news.date | date }}</p>
+          <p>{{ news.publishDate | date }}</p>
         </div>
       </a>
     </li>
