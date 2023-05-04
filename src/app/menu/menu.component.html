@@ -1,9 +1,8 @@
 <div class="menu-container">
-  <h2>News List</h2>
   <ul>
     <li *ngFor="let news of newsList">
       <a [routerLink]="['new', news.inode]">
-        <img [src]="news.image" alt="{{ news.title }} image" />
+        <img src="https://demo.dotcms.com{{ news.image }}?resize_w=100&resize_h=100" alt="{{ news.title }} image" />
         <div>
           <h3>{{ news.title }}</h3>
           <p>{{ news.publishDate | date }}</p>

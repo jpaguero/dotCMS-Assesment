@@ -26,6 +26,12 @@ export class MenuComponent implements OnInit, OnDestroy{
         tap((news: any) => {
           this.newsList = news.contentlets;
         })
+      ).subscribe(),
+
+      this.newsService.fetchNewsByDate(2020).pipe(
+        tap((news: any) => {
+          this.newsList = news.entity.jsonObjectView.contentlets;
+        })
       ).subscribe()
     ]
   }
