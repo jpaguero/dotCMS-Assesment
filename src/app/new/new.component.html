@@ -1,6 +1,12 @@
 <div class="new">
-  <h1>{{ news.title }}</h1>
-  <img src="{{ news.image }}" alt="{{ news.title }}" />
-  <p>{{ news.date | date }}</p>
-  <div class="content">{{ news.content }}</div>
+  <h1>{{ newItem.title }}</h1>
+  <img src="{{ newItem.image }}" alt="{{ newItem.title }}" />
+  <p>{{ newItem.publishDate | date }}</p>
+  <div class="content">
+    <ng-container *ngIf="newItem.blogContent && newItem.blogContent.content">
+      <ng-container *ngFor="let contentItem of newItem.blogContent.content">
+        <p *ngFor="let innerContent of contentItem.content">{{ innerContent.text }}</p>
+      </ng-container>
+    </ng-container>
+  </div>
 </div>

@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, switchMap, tap } from 'rxjs';
 
 import { NewsService } from '../services/news.service';
+import { New, newDefault } from '../models/news.model';
 
 @Component({
   selector: 'app-new',
@@ -10,22 +11,37 @@ import { NewsService } from '../services/news.service';
   styleUrls: ['./new.component.scss']
 })
 export class NewComponent implements OnInit, OnDestroy {
-  news: any;
-  subscription?: Subscription;
+  news$: Observable<any[]>;
+  newsList: any[] = [];
+  newItem: New = newDefault;
+  subscrs: Subscription[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private newsService: NewsService
-  ) { }
+  ) {
+    this.news$ = newsService.news$;
+  }
 
   ngOnInit(): void {
-    this.subscription = this.route.params.subscribe(params => {
-      const id = +params['id'];
-      this.news = this.newsService.getNewsById(id.toString());
-    });
+    this.subscrs.push(
+      this.newsService.fetchNews().pipe(
+        tap((news: any) => {
+          this.newsList = news.contentlets;
+        }),
+        switchMap(() => this.route.params)
+      ).subscribe(params => {
+        const id = params['id'];
+        this.newItem = this.getNewsById(id);
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+    this.subscrs.forEach((s) => s.unsubscribe());
+  }
+
+  getNewsById(id: string | null) {
+    return this.newsList.find((item: any) => item.inode === id);
   }
 }

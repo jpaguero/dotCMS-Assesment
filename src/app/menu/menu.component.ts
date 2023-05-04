@@ -16,7 +16,7 @@ export class MenuComponent {
   ) { }
 
   ngOnInit() {
-    this.newsList = this.newsService.getNewsList();
+    //this.newsList = this.newsService.getNewsList();
   }
 
 }

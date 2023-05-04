@@ -6,7 +6,7 @@ import { NewComponent } from './new/new.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'new/1', 
+    redirectTo: 'new/48ec3192-5f04-466b-b7cd-7134f3ea4d67', 
     pathMatch: 'full'
   },
   {
