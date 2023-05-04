@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { NewsService } from '../services/news.service';
-import { Subscription, tap } from 'rxjs';
-import { New } from '../models/news.model';
+import { NewsService } from '../../services/news.service';
+import { Subscription, take, tap } from 'rxjs';
+import { New } from '../../models/news.model';
 
 @Component({
   selector: 'app-menu',
@@ -13,6 +13,7 @@ export class MenuComponent implements OnInit, OnDestroy{
 
   newsList: New[] = [];
   subscrs: Subscription[] = [];
+  selectedYear: string = '0';
 
   constructor(
     private newsService: NewsService
@@ -24,13 +25,7 @@ export class MenuComponent implements OnInit, OnDestroy{
     this.subscrs = [
       this.newsService.news$.pipe(
         tap((news: any) => {
-          this.newsList = news.contentlets;
-        })
-      ).subscribe(),
-
-      this.newsService.fetchNewsByDate(2020).pipe(
-        tap((news: any) => {
-          this.newsList = news.entity.jsonObjectView.contentlets;
+          this.newsList = news?.contentlets;
         })
       ).subscribe()
     ]
@@ -38,6 +33,14 @@ export class MenuComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.subscrs.forEach((s) => s.unsubscribe());
+  }
+
+  selectYear(year: string): void {
+    this.newsService.fetchNewsByDate(parseInt(year)).pipe(
+      tap((news: any) => {
+        this.newsList = news?.entity?.jsonObjectView.contentlets;
+      })
+    ).pipe(take(1)).subscribe()
   }
 
 }

@@ -6,8 +6,8 @@ import { tap, shareReplay } from 'rxjs/operators';
 import { New } from '../models/news.model';
 
 function getDateRange(year: number): { startDate: string; endDate: string } {
-  const startDate = new Date(year, 0, 1);
-  const endDate = new Date(year, 11, 31);
+  const startDate = year ? new Date(year, 0, 1) : new Date(1900, 0, 1);
+  const endDate = year ? new Date(year, 11, 31) : new Date();
 
   const formatDate = (date: Date) => {
     const day = String(date.getDate()).padStart(2, '0');
@@ -69,7 +69,7 @@ export class NewsService {
 
     return this.httpClient.post<any>(this.API_SEARCH_ENDPOINT, requestBody).pipe(
       tap((response: any) => {
-        const news = response.contentlets;
+        const news = response?.contentlets;
         this.newsSubject.next(news);
       }),
       shareReplay(1)

@@ -1,4 +1,11 @@
 <div class="menu-container">
+  <select [(ngModel)]="selectedYear" (ngModelChange)="selectYear(selectedYear)">
+    <option value="0" selected>All</option>
+    <option value="2019">2019</option>
+    <option value="2020">2020</option>
+    <option value="2021">2021</option>
+  </select>
+
   <ul>
     <li *ngFor="let news of newsList">
       <a [routerLink]="['new', news.inode]">

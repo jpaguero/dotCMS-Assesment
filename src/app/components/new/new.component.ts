@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription, switchMap, tap } from 'rxjs';
 
-import { NewsService } from '../services/news.service';
-import { New, newDefault } from '../models/news.model';
+import { NewsService } from '../../services/news.service';
+import { New, newDefault } from '../../models/news.model';
 
 @Component({
   selector: 'app-new',
@@ -27,7 +27,9 @@ export class NewComponent implements OnInit, OnDestroy {
     this.subscrs.push(
       this.newsService.fetchNews().pipe(
         tap((news: any) => {
-          this.newsList = news.contentlets;
+          if(news){
+            this.newsList = news.contentlets;
+          }
         }),
         switchMap(() => this.route.params)
       ).subscribe(params => {
