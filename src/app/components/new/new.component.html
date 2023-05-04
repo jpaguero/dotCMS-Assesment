@@ -1,4 +1,4 @@
-<div class="new" *ngIf="newItem">
+<div class="new" *ngIf="newItem" @fadeIn>
   <h1>{{ newItem.title }}</h1>
   <img src="https://demo.dotcms.com{{ newItem.image }}?resize_w=1200&resize_h=800" alt="{{ newItem.title }}" />
   <p>{{ newItem.publishDate | date }}</p>
